@@ -48,7 +48,7 @@ jQuery(document).ready(function(){
   //
   // Returns the tweet transforemed into HTML
   function parseTweet(tweet, hours) {
-    var html = "<div id='tweet' class='color-" + tweetColour(hours) +  "'>";
+    var html = "<div id='tweet' class='block color-" + tweetColour(hours) +  "'>";
     
     html += tweetAvatar(tweet);
     html += tweetBody(tweet);
@@ -161,7 +161,7 @@ jQuery(document).ready(function(){
     for (var i=0; i<len; i++) {
       html += "<li>";
       for (var j=0; j<chart[i]; j++)  {
-        html += "<span>&nbsp;</span>";
+        html += "<span class='color-" + i + "'>&nbsp;</span> ";
       }
       html += chart[i] + "</li>";
     }

@@ -1,0 +1,115 @@
+
+/* Layout
+*/
+
+body {
+  width: 80%;
+  margin: 0 auto;
+}
+
+
+
+/* Vertical rhythm 
+*/
+
+body { font-size:100%; line-height:1.25; }
+h1, h2, h3 { margin-top:0; margin-bottom:0; }
+h1 { font-size:1.5em; padding:1.45833em 0; }
+h2 { font-size:1.33333em; padding:1.25em 0; }
+h3 { font-size:1.16667em; padding:1.51785em 0; }
+
+
+
+/* Typography
+*/
+body {
+  font-family: 'Play', sans-serif;
+}
+h1, h2, h3 {
+  font-weight: normal;
+}
+
+/* Colors
+*/
+
+body {
+  color: #333;
+}
+.color-0 {
+  background: #f9f9f9;
+}
+.color-1 {
+  background: #f8ffe1;
+}
+.color-2 {
+  background: #f1ffbf;
+}
+.color-3 {
+  background: #E5FF8C;
+}
+
+
+
+/* Header 
+*/
+
+header div {
+  padding: .312em;
+}
+
+
+
+/* Chart
+*/
+
+
+#chart {
+  width: 40%;
+  float: right;
+  position: relative;
+  top: -13em;
+}
+#chart h3 {
+  padding: 0;
+}
+#chart ul {
+  margin: 0;
+  list-style: none;
+}
+#chart li {
+  padding: .625em;
+}
+#chart span {
+  width: 5%;
+  display: inline-block;
+  border: 1px dotted #666;
+}
+
+
+/* Tweets
+*/
+
+
+#tweets {
+  width: 50%;
+  margin-right: 10%;
+}
+
+#tweet {
+  margin: 1.25em 0;
+  padding: .312em;
+  border-bottom: 1px dotted #eee;
+}
+#tweet #avatar {
+  width: 48px;
+  float: left;
+  margin-right: 1.25em;
+}
+#tweet #body {
+  padding-bottom: .312em;
+}
+#tweet #date {
+  padding-bottom: 1.25em;
+  font-size: smaller;
+  color: #bbb;
+}
