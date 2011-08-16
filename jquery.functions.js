@@ -31,7 +31,9 @@ jQuery(document).ready(function(){
   //
   // Returns the tweet transforemed into HTML
   function parseTweet(tweet) {
-    var html = "<div id='tweet'>";
+    var hours = tweetHoursAgo(tweet);
+  
+    var html = "<div id='tweet' class='" + tweetColour(hours) +  "'>";
     
     html += tweetAvatar(tweet);
     html += tweetBody(tweet);
@@ -65,7 +67,7 @@ jQuery(document).ready(function(){
   // Returns a HTML <div> tag
   function tweetBody(tweet) {
     var html = "<div id='body'>";
-    
+     
     html += tweet.text;
     html += "</div>";
       
@@ -80,15 +82,43 @@ jQuery(document).ready(function(){
   function tweetDate(tweet) {
     var html = "<div id='date'>";
     
-    // Calculate how many hours ago was the tweet posted
+    html += tweetHoursAgo(tweet) + " hours ago.";
+    html += "</div>";
+      
+    return html;
+  }
+  
+  // Calculate how many hours ago was the tweet posted
+  //
+  // tweet - the tweet
+  //
+  // Returns an integer
+  function tweetHoursAgo(tweet) {    
     var date_tweet = new Date(tweet.created_at);
     var date_now   = new Date();
     var date_diff  = date_now - date_tweet;
     var hours      = Math.round(date_diff/(1000*60*60));
     
-    html += hours + " hours ago.";
-    html += "</div>";
-      
-    return html;
+    return hours;
   }
+  
+  // Colouring the tweet based on how many hours the tweet was posted
+  //
+  // hour - the tweet posted
+  //
+  // Returns string
+  function tweetColour(hour) {
+    var color = "hour-0";
+    
+    if (hour >= 1 && hour < 2) {
+      color = "hour-1";
+    } else if (hour >= 2 && hour < 4) {
+      color = "hour-2";
+    } else if (hour >= 4) {
+      color = "hour-4";
+    }
+    
+    return color;
+  }  
+  
 });
