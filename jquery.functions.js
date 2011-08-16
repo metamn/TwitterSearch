@@ -3,45 +3,52 @@ jQuery(document).ready(function(){
   // Enable caching
   jQuery.ajaxSetup({ cache: true });
   
-  // Loading Twitter search results      
+  // Loading and parsing Twitter search results      
   jQuery.getJSON('http://search.twitter.com/search.json?q=clairvoyance&callback=?',
     function(data) {    
       var result = '';
       
-      // Creating the result
+      // Processing Twitter data
       if (data) {                
+      
+        // The array storing tweet publishing dates in hours ago
+        // This array will help drawing the chart
+        var hoursAgo = new Array();
         
         // Looping through the tweets
         jQuery.each(data.results, function(i, tweet) { 
-          result += parseTweet(tweet);
+          // Saving tweet publishing date
+          var hours = tweetHoursAgo(tweet);
+          hoursAgo.push(hours);
+          
+          // Generating the HTML for each tweet  
+          result += parseTweet(tweet, hours);          
         });
+        
+        // Drawing the chart
+        chart = chartDraw(hoursAgo);
+        jQuery("#chart").append(chart);
         
       } else {
         result = "Could not load Twitter search results";
       }
       
-      // Displaying results in the browser
+      // Displaying tweets in the browser
       jQuery('#tweets').append(result);
     }
   );
-  
-  jQuery("#tweets #tweet").each(function() {
-    var hour = jQuery(this).html();
-    jQuery("#chart").append(hour);    
-  });
-  
-  
   
   
   // Parsing tweets
   //
   // tweet - the tweet in JSONP
+  // hours - the hours ago the tweet was published
+  // 
+  // Each tweet will be coloured differently based on its publish date
   //
   // Returns the tweet transforemed into HTML
-  function parseTweet(tweet) {
-    var hours = tweetHoursAgo(tweet);
-  
-    var html = "<div id='tweet' class='" + tweetColour(hours) +  "'>";
+  function parseTweet(tweet, hours) {
+    var html = "<div id='tweet' class='color-" + tweetColour(hours) +  "'>";
     
     html += tweetAvatar(tweet);
     html += tweetBody(tweet);
@@ -114,19 +121,52 @@ jQuery(document).ready(function(){
   //
   // hour - the tweet posted
   //
-  // Returns string
+  // Returns integer
   function tweetColour(hour) {
-    var color = "hour-0";
+    var color = 0;
     
     if (hour >= 1 && hour < 2) {
-      color = "hour-1";
+      color = 1;
     } else if (hour >= 2 && hour < 4) {
-      color = "hour-2";
+      color = 2;
     } else if (hour >= 4) {
-      color = "hour-4";
+      color = 3;
     }
     
     return color;
   }  
   
+  
+  // Draw the chart using only CSS
+  //
+  // hours - an array of hours each tweet was published ago
+  //
+  // Returns HTML
+  function chartDraw(hours) {
+    var html = "";
+   
+    // Create an array to store the frequency of tweets posted in <1 hours, 1 hours, 2 hours, 4 hours ago
+    // This will display the chart
+    var chart = new Array(0, 0, 0, 0);    
+    
+    var len = hours.length;
+    for (var i=0; i<len; i++) {
+      chart[tweetColour(hours[i])] += 1;           
+    }
+    
+    
+    // Display the chart 
+    html += '<ul>';
+    var len = chart.length;
+    for (var i=0; i<len; i++) {
+      html += "<li>";
+      for (var j=0; j<chart[i]; j++)  {
+        html += "<span>&nbsp;</span>";
+      }
+      html += chart[i] + "</li>";
+    }
+    html += "</ul>";
+    
+    return html;
+  }
 });
