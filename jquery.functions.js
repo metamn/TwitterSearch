@@ -25,6 +25,14 @@ jQuery(document).ready(function(){
     }
   );
   
+  jQuery("#tweets #tweet").each(function() {
+    var hour = jQuery(this).html();
+    jQuery("#chart").append(hour);    
+  });
+  
+  
+  
+  
   // Parsing tweets
   //
   // tweet - the tweet in JSONP
